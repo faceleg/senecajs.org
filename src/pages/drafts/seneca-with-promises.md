@@ -113,15 +113,10 @@ var products = [
   {name: 'Product E', price: 0.99}
 ];
 
-// Build an array of promisified commands
-var cmds = [];
-products.forEach(function (product) {
-  var command = act({cmd: 'dollars-to-euros', product: product});
-
-  cmds.push(command);
-});
-
-Promise.all(cmds)
+Promise.all(products.map(function (product) {
+  // Build an array of promisified commands
+  return act({cmd: 'dollars-to-euros', product: product});
+}))
   .then(function (results) {
     // results is now an array of each of the resolved promises
     // {name: 'Product A', price: 9.99, euros: 8.81}
